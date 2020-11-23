@@ -1,4 +1,8 @@
-# TuyaSmartSocketKit 云云对接
+## 注意：当前仓库继承自即将被废弃的涂鸦Github仓库：https://github.com/TuyaInc/tuyasmart_socket_ios_sdk，请使用当前 Github 仓库进行涂鸦 SDK相关开发。更换远程Github仓库URL的教程，可以参考：https://docs.github.com/cn/free-pro-team@latest/github/using-git/changing-a-remotes-url
+
+# Tuya Socket iOS SDK
+
+[中文版](README_cn.md) | [English](README.md)
 
 >`TuyaSmartSocketKit`主要针对涂鸦云云对接的产品中iOS端开发者。该项目旨在提供iPhone手机（以下简称手机）与硬件设备（以下简称设备）的局域网连接，并在局域网中发送dpCode进行设备控制通信。
 
