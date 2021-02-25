@@ -1,163 +1,157 @@
-#### Note: This repository is inherited from the [old Tuya Github repository](https://github.com/TuyaInc/tuyasmart_socket_ios_sdk), which will be deprecated soon. Please use this repository for Tuya SDK development instead. For changing the existing remote repository URL, please check this [tutorial](https://docs.github.com/en/free-pro-team@latest/github/using-git/changing-a-remotes-url).
+#### Note: This repository is inherited from the [old Tuya Github repository](https://github.com/TuyaInc/tuyasmart_socket_ios_sdk) that will be deprecated soon. Please use this repository for Tuya SDK development instead. For changing the existing remote repository URL, see this [tutorial](https://docs.github.com/en/github/using-git/changing-a-remotes-url)
 
 # Tuya Socket iOS SDK
 
 [中文版](README_cn.md) | [English](README.md)
 
-> TuyaSmartSocketKit mainly aimed at iOS developers in Tuyayun cloud-connected products.The project aims to provide a local area network connection between an iPhone (hereinafter referred to as a phone) and a hardware device (hereinafter referred to as a device), and send dpCode in the local area network for device control communication.
+> `TuyaSmartSocketKit` is mainly for iOS developers concerning Tuya cloud-to-cloud connection products. This project is launch to provide LAN connection between iPhones (hereinafter referred to as a phone) and hardware devices (hereinafter referred to as a device)and send dpCode in LAN to control communication.
 
-Tuya device connection and control process is as follows:
-https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg
+The Tuya device connection and control process is as follows: https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg
 
-# STEP
-#### 1 LAN initialization 
-Use the following methods to connect to a LAN.
+# Procedure
+`TuyaSmartSocketKit` uses `TuyaSmartSocket` as an access.
 
+#### 1. Initialize LAN
+
+You can connect to the LAN with the following methods:
 ```
 [[TuyaSmartSocket sharedInstance] startSocketService];
 ```
 
-If you need to monitor LAN changes, you can use the following :
+You can monitor the LAN changes with the following methods:
 ```
 [TuyaSmartSocket sharedInstance].delegate = self;
 ```
 
-#### 2 Connect the device
-
-In the delegate callback, the device can be controlled after a successful connection.
-This parameter can be obtained through the cloud-docking interface `/ v1.0 / devices / schema`.
+#### 2. Connect device
+The device informs that the LAN will be connected through TuyaSmartSocoket in the following below. This parameter can be obtained through the API of cloud-to-cloud connection `/v1.0/devices/schema`.
 ```
 /**
  *  set device info
- *  设置设备的基本信息
- *
+ Configure basic device information *
  *  @param devInfo   devInfo
  */
-- (void)addDeviceInfoWIthDevInfo:(NSDictionary *)devInfo;
+ - (void)addDeviceInfoWIthDevInfo:(NSDictionary *)devInfo;
 ```
 
-#### 3 Device communication
+#### 3. Device communication
 In the delegate callback, the device can be controlled after a successful connection.
 ```
 - (void)socketDidTcpConnected:(TuyaSmartSocket *)socket devId:(NSString *)devId;
 ```
 
-Send dpCode to the device to control the device in the following way.
+Control the device by sending dpCode to the device in the following method.
 ```
 /**
-*  publish message in lan use standard data point
-*
-*  使用标准dpCode发送局域网消息
-*
-*  @param devId    devId
-*  @param dpCodeDict   dpCode : dpValue
-*  @param success  Success block
-*  @param failure  Failure block
-*/
-- (void)sendRequestWithDevId:(NSString *)devId
+ *  publish message in lan use standard data point
+ *
+ Send LAN message with standard dpCode *
+ *  @param devId    devId
+ *  @param dpCodeDict   dpCode : dpValue
+ *  @param success  Success block
+ *  @param failure  Failure block
+ */
+ - (void)sendRequestWithDevId:(NSString *)devId
                  dpcodeValue:(NSDictionary<NSString */* dpCode */,id/* dpValue */> *)dpCodeDict
                      success:(void(^)(void))success
                      failure:(void(^)(void))failure;
 ```
-`dpCodeValue` composition rules:
-To learn more about dp points, you can refer to [Update device information](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/en/resource/Device.html#update-device-information).
-`dpCode` is a function point that describes the device, that is, which function controls a device supports. The schema returned in the `/v1.0/devices/schema` interface will return the feature points supported by the device. The typical function points are described below.
-`dpCodeDict` is performed in the format `dpCode` : `dpValue` . `dpCode`  can be obtained from the code field in the schema. `dpValue`  needs to be sent according to the format supported by the `dp point`.
-The following will take Demo given in the interface document as an example to explain how dpCode  is structured.
 
+`dpCodeValue` Composition rule： For detailed information about the DP, see [Update device information](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/en/resource/Device.html#device-management)
+
+`dpCode` describes the DPs of the device, namely, what control functions does a device support. The DPs supported by the device will be returned in the **schema** that is returned in the " /v1.0/devices/schema" API. The sections below describe the typical DPs respectively. 
+`dpCodeDict` is performed in the format of `dpCode` : `dpValue` . `The dpCode` can be obtained from the code field in **schema**. `dpValue` needs to be sent in the format that the DP supports. The section below describes the composition of dpCode, using the Demo in the API documentation.
 ###### 1. Switch
     "type": "bool"
     e.g. {@"switch_led" : YES} or {@"switch_led" : YES}
-
 ```
 {
-  "mode": "rw",
-  "code": "switch_led",
-  "name": "开关 ",
-  "property": {
-    "type": "bool"
-  },
-  "iconname": "icon- dp_power2",
-  "id": 20,
-  "type": "obj",
-  "desc": ""
-}
+    "mode": "rw",
+    "code": "switch_led",
+    "name": "Switch ",
+    "property": {
+        "type": "bool"
+    },
+    "iconname": "icon- dp_power2",
+    "id": 20,
+    "type": "obj",
+    "desc": ""
+ }
 ```
+###### 2. Mode selection (single option)
 
-###### 2. Mode option (signal choose)
     "type": "enum"
     e.g. dpCode : {@"work_mode" : @"white"} {@"work_mode" : @"colour"}
 ```
 {
-  "mode": "rw",
-  "code": "work_mode",
-  "name": "模式",
-  "property": {
-    "range": ["white", "colour", "scene", "music"],
-    "type": "enum"
-  },
-  "iconname": "i con-dp_list",
-  "id": 21,
-  "type": "obj",
-  "desc": ""
-}
+    "mode": "rw",
+    "code": "work_mode",
+    "name": "mode",
+    "property": {
+        "range": ["white", "colour", "scene", "music"],
+        "type": "enum"
+    },
+    "iconname": "i con-dp_list",
+    "id": 21,
+    "type": "obj",
+    "desc": ""
+ }
 ```
 
-###### 3. Brightness value (send number)
+###### 3. Brightness value (Send value)
     "type": "value"
     e.g. dpCode: {@"bright_value": @(400)}
-    Note: The values here are limited by maximum, minimum and step values.
+    Note: The values are limited by maximum, minimum and step values.
 ```
 {
-  "mode": "rw",
-  "code": "bright_value",
-  "name": "亮度值",
-  "property": {
-    "min": 10,
-    "max": 1000,
-    "scale": 0,
-    "step": 1,
-    "type": "value"
-  },
-  "iconname ": "icon-dp_sun",
-  "id": 22,
-  "type": "obj",
-  "desc": ""
-}
+    "mode": "rw",
+    "code": "bright_value",
+    "name": "Brightness value",
+    "property": {
+        "min": 10,
+        "max": 1000,
+        "scale": 0,
+        "step": 1,
+        "type": "value"
+    },
+    "iconname ": "icon-dp_sun",
+    "id": 22,
+    "type": "obj",
+    "desc": ""
+ }
 ```
-###### 4. Color data (send string)
+###### 4. Colored light (send string)
     "type": "string"
-    e.g. dpCode: {@"colour_data":@"000100010001"} 
-    The above  is only one of the transmission methods. The specific deValue value needs to be analyzed for specific situations.
+    e.g. dpCode: {@"colour_data":@"000100010001"}
+    The method above is just one of the transmission methods, and the specific deValue value needs to be analyzed according to the specific situation
 ```
 {
-  "mode": "rw",
-  "code": "colour_data",
-  "name": "彩光",
-  "property": {
-    "type": "string",
-    "maxlen": 255
-  },
-  "iconname": "icon- dp_light",
-  "id": 24,
-  "type": "obj",
-  "desc": ""
-}
+    "mode": "rw",
+    "code": "colour_data",
+    "name": "Colored light",
+    "property": {
+        "type": "string",
+        "maxlen": 255
+    },
+    "iconname": "icon- dp_light",
+    "id": 24,
+    "type": "obj",
+    "desc": ""
+ }
 ```
-
-###### 4 Disconnect
+###### 4. Disconnect
 ```
 [[TuyaSmartSocket sharedInstance] closeSocketService];
-[TuyaSmartSocket sharedInstance].delegate = nil;
+ [TuyaSmartSocket sharedInstance].delegate = nil;
 ```
 ## Support
 
-You can get support from Tuya with the following methods:
+You can get support through the following accesses:
 
-* Tuya Smart Help Center: https://support.tuya.com/en/help
+* [Tuya Smart Help Center](https://support.tuya.com/en/help)
 
-* Technical Support Council: https://iot.tuya.com/council/ 
+* [Technical Support Council](https://iot.tuya.com/council/) 
 
 ## License
 
-This Tuya Home iOS SDK Sample is licensed under the MIT License.
+The Tuya Home iOS SDK Sample is licensed under the MIT License.
