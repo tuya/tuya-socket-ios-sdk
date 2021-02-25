@@ -1,6 +1,6 @@
 #### Note: This repository is inherited from the [old Tuya Github repository](https://github.com/TuyaInc/tuyasmart_socket_ios_sdk) that will be deprecated soon. Please use this repository for Tuya SDK development instead. For changing the existing remote repository URL, see this [tutorial](https://docs.github.com/en/github/using-git/changing-a-remotes-url)
 
-# Tuya Socket iOS SDK
+## Tuya Socket iOS SDK
 
 [中文版](README_cn.md) | [English](README.md)
 
@@ -8,7 +8,7 @@
 
 The Tuya device connection and control process is as follows: https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg
 
-# Procedure
+## Procedure
 `TuyaSmartSocketKit` uses `TuyaSmartSocket` as an access.
 
 #### 1. LAN initialization
@@ -61,7 +61,7 @@ Control the device by sending dpCode to the device in the following method.
 
 `dpCode` describes the DPs of the device, namely, what control functions does a device support. The DPs supported by the device will be returned in the **schema** that is returned in the " /v1.0/devices/schema" API. The sections below describe the typical DPs respectively. 
 `dpCodeDict` is performed in the format of `dpCode` : `dpValue` . `The dpCode` can be obtained from the code field in **schema**. `dpValue` needs to be sent in the format that the DP supports. The section below describes the composition of dpCode, using the Demo in the API documentation.
-###### 1. Switch
+##### 1. Switch
     "type": "bool"
     e.g. {@"switch_led" : YES} or {@"switch_led" : YES}
 ```
@@ -78,7 +78,7 @@ Control the device by sending dpCode to the device in the following method.
     "desc": ""
  }
 ```
-###### 2. Mode selection (single option)
+##### 2. Mode selection (single option)
 
     "type": "enum"
     e.g. dpCode : {@"work_mode" : @"white"} {@"work_mode" : @"colour"}
@@ -98,7 +98,7 @@ Control the device by sending dpCode to the device in the following method.
  }
 ```
 
-###### 3. Brightness value (Send value)
+##### 3. Brightness value (Send value)
     "type": "value"
     e.g. dpCode: {@"bright_value": @(400)}
     Note: The values are limited by maximum, minimum and step values.
@@ -120,7 +120,7 @@ Control the device by sending dpCode to the device in the following method.
     "desc": ""
  }
 ```
-###### 4. Colored light (send string)
+##### 4. Colored light (send string)
     "type": "string"
     e.g. dpCode: {@"colour_data":@"000100010001"}
     The method above is just one of the transmission methods, and the specific deValue value needs to be analyzed according to the specific situation
