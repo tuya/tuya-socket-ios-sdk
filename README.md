@@ -11,7 +11,7 @@ The Tuya device connection and control process is as follows: https://cdn.nlark.
 # Procedure
 `TuyaSmartSocketKit` uses `TuyaSmartSocket` as an access.
 
-#### 1. Initialize LAN
+#### 1. LAN initialization
 
 You can connect to the LAN with the following methods:
 ```
@@ -23,7 +23,7 @@ You can monitor the LAN changes with the following methods:
 [TuyaSmartSocket sharedInstance].delegate = self;
 ```
 
-#### 2. Connect device
+#### 2. Device connection
 The device informs that the LAN will be connected through TuyaSmartSocoket in the following below. This parameter can be obtained through the API of cloud-to-cloud connection `/v1.0/devices/schema`.
 ```
 /**
@@ -139,7 +139,7 @@ Control the device by sending dpCode to the device in the following method.
     "desc": ""
  }
 ```
-###### 4. Disconnect
+#### 4. Disconnect
 ```
 [[TuyaSmartSocket sharedInstance] closeSocketService];
  [TuyaSmartSocket sharedInstance].delegate = nil;
