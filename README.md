@@ -60,7 +60,7 @@ Control the device by sending dpCode to the device in the following method.
 `dpCodeValue` Composition rule： For detailed information about the DP, see [Update device information](https://tuyainc.github.io/tuyasmart_home_ios_sdk_doc/en/resource/Device.html#device-management)
 
 `dpCode` describes the DPs of the device, namely, what control functions does a device support. The DPs supported by the device will be returned in the **schema** that is returned in the " /v1.0/devices/schema" API. The sections below describe the typical DPs respectively. 
-`dpCodeDict` is performed in the format of `dpCode` : `dpValue` . `The dpCode` can be obtained from the code field in **schema**. `dpValue` needs to be sent in the format that the DP supports. The section below describes the composition of dpCode, using the Demo in the API documentation.
+`dpCodeDict` is performed in the format of `dpCode` : `dpValue` . `The dpCode` can be obtained from the code field in **schema**. `dpValue` needs to be sent in the format that the DP supports. The section below describes the composition of dpCode, using the Demo in the API documentation as an example.
 ##### 1. Switch
     "type": "bool"
     e.g. {@"switch_led" : YES} or {@"switch_led" : YES}
