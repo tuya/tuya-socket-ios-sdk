@@ -4,7 +4,7 @@
 
 [中文版](README_cn.md) | [English](README.md)
 
-> `TuyaSmartSocketKit` is mainly for iOS developers concerning Tuya cloud-to-cloud connection products. This project is launch to provide LAN connection between iPhones (hereinafter referred to as a phone) and hardware devices (hereinafter referred to as a device)and send dpCode in LAN to control communication.
+> `TuyaSmartSocketKit` is mainly for iOS developers concerning Tuya cloud-to-cloud connection products. This project is launched to provide LAN connection between iPhones (hereinafter referred to as a phone) and hardware devices (hereinafter referred to as a device)and send dpCode in LAN to control communication.
 
 The Tuya device connection and control process is as follows: https://cdn.nlark.com/yuque/__puml/1de1d74497bdbb14a4debde42f3f3f34.svg
 
