@@ -28,10 +28,11 @@ The device informs that the LAN will be connected through TuyaSmartSocoket in th
 ```
 /**
  *  set device info
- Configure basic device information *
+ Configure basic device information 
+ *
  *  @param devInfo   devInfo
  */
- - (void)addDeviceInfoWIthDevInfo:(NSDictionary *)devInfo;
+- (void)addDeviceInfoWIthDevInfo:(NSDictionary *)devInfo;
 ```
 
 #### 3. Device communication
@@ -68,7 +69,7 @@ Control the device by sending dpCode to the device in the following method.
 {
     "mode": "rw",
     "code": "switch_led",
-    "name": "Switch ",
+    "name": "Switch",
     "property": {
         "type": "bool"
     },
@@ -104,22 +105,22 @@ Control the device by sending dpCode to the device in the following method.
     Note: The values are limited by maximum, minimum and step values.
 ```
 {
-    "mode": "rw",
-    "code": "bright_value",
-    "name": "Brightness value",
-    "property": {
-        "min": 10,
-        "max": 1000,
-        "scale": 0,
-        "step": 1,
-        "type": "value"
-    },
-    "iconname ": "icon-dp_sun",
-    "id": 22,
-    "type": "obj",
-    "desc": ""
+   "mode": "rw",
+   "code": "bright_value",
+   "name": "Brightness value",
+   "property": {
+     "min": 10,
+     "max": 1000,
+     "scale": 0,
+     "step": 1,
+     "type": "value"
+   },
+   "iconname ": "icon-dp_sun",
+   "id": 22,
+   "type": "obj",
+   "desc": ""
  }
-```
+ ```
 ##### 4. Colored light (send string)
     "type": "string"
     e.g. dpCode: {@"colour_data":@"000100010001"}
@@ -142,7 +143,7 @@ Control the device by sending dpCode to the device in the following method.
 #### 4. Disconnect
 ```
 [[TuyaSmartSocket sharedInstance] closeSocketService];
- [TuyaSmartSocket sharedInstance].delegate = nil;
+[TuyaSmartSocket sharedInstance].delegate = nil;
 ```
 ## Support
 
